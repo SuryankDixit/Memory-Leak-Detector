@@ -31,7 +31,7 @@ main(int argc, char **argv){
     struct_db_t *struct_db = calloc(1, sizeof(struct_db_t));
     mld_init_primitive_data_types_support(struct_db);
 
-    
+
     /*Step 2 : Create structure record for structure emp_t*/
     static field_info_t emp_fields[] = {
         FIELD_INFO(emp_t, emp_name, CHAR,    0),
@@ -76,6 +76,7 @@ main(int argc, char **argv){
     print_object_db(object_db);
 
     printf("\n");
+    
     run_mld_algorithm(object_db);
     report_leaked_objects(object_db);
 

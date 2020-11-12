@@ -23,7 +23,7 @@ print_structure_rec(struct_db_rec_t *struct_rec){
         field = &struct_rec->fields[j];
         printf("  %-20s |", "");
         printf("%-3d %-20s | dtype = %-15s | size = %-5d | offset = %-6d|  nstructname = %-20s  |\n",
-                j, field->fname, DATA_TYPE[field->dtype], field->size, field->offset, field->nested_str_name);
+                j, field->fname, DATA_TYPE[field->data_type], field->size, field->offset, field->nested_str_name);
         printf("  %-20s |", "");
         printf(ANSI_COLOR_CYAN "--------------------------------------------------------------------------------------------------------------------------|\n" ANSI_COLOR_RESET);
     }
@@ -243,7 +243,7 @@ mld_explore_objects_recursively(object_db_t *object_db,
 
             /*We are only concerned with fields which are pointer to
              * other objects*/
-            switch(field_info->dtype){
+            switch(field_info->data_type){
                 case UINT8:
                 case UINT32:
                 case INT32:
@@ -339,7 +339,7 @@ mld_dump_object_rec_detail(object_db_rec_t *obj_rec){
             
             field = &obj_rec->struct_rec->fields[field_index];
 
-            switch(field->dtype){
+            switch(field->data_type){
                 case UINT8:
                 case INT32:
                 case UINT32:
