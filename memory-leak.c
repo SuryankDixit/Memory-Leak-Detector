@@ -97,7 +97,10 @@ static void
 add_object_to_object_db(object_db_t *object_db, 
                      void *ptr, 
                      int units,
-                     struct_db_rec_t *struct_rec){
+                     struct_db_rec_t *struct_rec,
+                     mld_boolean_t is_visited, 
+                     mld_boolean_t is_root,
+                     mld_boolean_t is_global){
      
     object_db_rec_t *obj_rec = object_db_look_up(object_db, ptr);
     /*Dont add same object twice*/
@@ -133,7 +136,8 @@ xcalloc(object_db_t *object_db,
     struct_db_rec_t *struct_rec = struct_db_look_up(object_db->struct_db, struct_name);
     assert(struct_rec);
     void *ptr = calloc(units, struct_rec->ds_size);
-    add_object_to_object_db(object_db, ptr, units, struct_rec);
+    add_object_to_object_db(object_db, ptr, units, struct_rec, 
+        MLD_FALSE, MLD_FALSE, MLD_FALSE);  /*xcalloc by default set following flags on object record*/
     return ptr;
 }
 
@@ -158,5 +162,32 @@ print_object_db(object_db_t *object_db){
     for(; head; head = head->next){
         print_object_rec(head, i++);
     }
+}
+
+void 
+mld_register_root_object (object_db_t *object_db,
+                          void *objptr,
+                          char *struct_name,
+                          unsigned int units){
+
+    struct_db_rec_t *struct_rec = struct_db_look_up(object_db->struct_db, struct_name);
+    assert(struct_rec);
+
+   /*Create a new object record and add to object database*/
+   add_object_to_object_db(object_db, objptr, units, struct_rec, MLD_TRUE, MLD_TRUE, MLD_TRUE);  
+}
+
+/*Application might create an object using xcalloc , but at the same time the object
+ * can be root object. Use this API to override the object flags for the object already
+ * preent in object db*/
+void
+set_mld_object_as_global_root(object_db_t *object_db, void *obj_ptr){
+
+    object_db_rec_t *obj_rec = object_db_look_up(object_db, obj_ptr);
+    assert(obj_rec);
+    
+    obj_rec->is_visited = MLD_TRUE;
+    obj_rec->is_root = MLD_TRUE;
+    obj_rec->is_global = MLD_TRUE;
 }
 
