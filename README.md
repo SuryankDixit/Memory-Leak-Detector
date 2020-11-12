@@ -3,12 +3,12 @@ In this project, we try to implement a garbage collector for C programs which wo
 
 
 ## Compile
-gcc -g -c memory-leak.c -o memory-leak.o
-gcc -g -c test-app.c -o test-app.o
-gcc -g -o exe test-app.o memory-leak.o
+  * gcc -g -c memory-leak.c -o memory-leak.o
+  * gcc -g -c test-app.c -o test-app.o
+  * gcc -g -o exe test-app.o memory-leak.o
 
 ## Run the program as :
-./exe
+  * ./exe
 
 ## Documentation:
 Start writing your code from test-app.c file and implement your code. Compile memory-leak.c file and add memory-leak.h file where-ever needed.
