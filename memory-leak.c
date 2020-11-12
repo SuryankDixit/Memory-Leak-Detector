@@ -386,3 +386,12 @@ report_leaked_objects(object_db_t *object_db){
         }
     }
 }
+
+/*Support for primitive data types*/
+void
+mld_init_primitive_data_types_support(struct_db_t *struct_db){
+
+    REG_STRUCT(struct_db, int , 0);
+    REG_STRUCT(struct_db, float , 0);
+    REG_STRUCT(struct_db, double , 0);
+}

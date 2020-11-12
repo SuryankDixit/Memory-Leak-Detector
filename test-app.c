@@ -29,6 +29,8 @@ main(int argc, char **argv){
 
     /*Step 1 : Initialize a new structure database */
     struct_db_t *struct_db = calloc(1, sizeof(struct_db_t));
+    mld_init_primitive_data_types_support(struct_db);
+
     
     /*Step 2 : Create structure record for structure emp_t*/
     static field_info_t emp_fields[] = {

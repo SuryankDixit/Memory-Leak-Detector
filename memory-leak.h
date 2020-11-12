@@ -158,5 +158,7 @@ run_mld_algorithm(object_db_t *object_db);
 void
 report_leaked_objects(object_db_t *object_db);
 
+void
+mld_init_primitive_data_types_support(struct_db_t *struct_db);
 
 #endif /* __MLD__ */
