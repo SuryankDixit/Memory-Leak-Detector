@@ -21,7 +21,7 @@ typedef struct student_{
     unsigned int rollno;
     unsigned int age;
     float aggregate;
-    struct student_ *best_colleage;
+    struct student_ *best_colleague;
 } student_t;
 
 int
@@ -46,7 +46,7 @@ main(int argc, char **argv){
         FIELD_INFO(student_t, rollno,    UINT32, 0),
         FIELD_INFO(student_t, age,       UINT32, 0),
         FIELD_INFO(student_t, aggregate, FLOAT, 0),
-        FIELD_INFO(student_t, best_colleage, OBJ_PTR, student_t)
+        FIELD_INFO(student_t, best_colleague, OBJ_PTR, student_t)
     };
     REG_STRUCT(struct_db, student_t, stud_fiels);
 
@@ -63,9 +63,19 @@ main(int argc, char **argv){
     /*Step 2 : Create some sample objects, equivalent to standard 
      * calloc(1, sizeof(student_t))*/
     student_t *abhishek = xcalloc(object_db, "student_t", 1);
+    mld_set_dynamic_object_as_root(object_db, abhishek);
+
     student_t *shivani = xcalloc(object_db, "student_t", 1);
+    strncpy(shivani->stud_name, "shivani", strlen("shivani"));
+    // abhishek->best_colleague = shivani;
+    
     emp_t *joseph = xcalloc(object_db, "emp_t", 2);
 
     print_object_db(object_db);
+
+    printf("\n");
+    run_mld_algorithm(object_db);
+    report_leaked_objects(object_db);
+
     return 0;
 }

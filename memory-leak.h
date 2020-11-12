@@ -117,7 +117,6 @@ struct _object_db_rec_{
     struct_db_rec_t *struct_rec;
     mld_boolean_t is_visited; /*Used for Graph traversal*/
     mld_boolean_t is_root;    /*Is this object is Root object*/
-    mld_boolean_t is_global;    /*Is this object is referenced by global variable in application*/  
 };
 
 typedef struct _object_db_{
@@ -141,12 +140,23 @@ void*
 xcalloc(object_db_t *object_db, char *struct_name, int units);
 
 
-void mld_register_root_object (object_db_t *object_db, 
-                               void *objptr, 
-                               char *struct_name, 
-                               unsigned int units);
+void 
+mld_register_global_object_as_root (object_db_t *object_db,
+                          void *objptr,
+                          char *struct_name,
+                          unsigned int units);
 
 void
-set_mld_object_as_global_root(object_db_t *object_db, void *obj_ptr);
+mld_set_dynamic_object_as_root(object_db_t *object_db, void *obj_ptr);
+
+
+
+/*APIs for MLD Algorithm*/
+void
+run_mld_algorithm(object_db_t *object_db);
+
+void
+report_leaked_objects(object_db_t *object_db);
+
 
 #endif /* __MLD__ */
