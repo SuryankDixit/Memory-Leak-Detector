@@ -41,7 +41,7 @@ main(int argc, char **argv){
         FIELD_INFO(emp_t, salary,   FLOAT, 0)
     };
     /*Step 3 : Register the structure in structure database*/
-    REG_STRUCT(struct_db, emp_t, emp_fields);
+    REGISTER_STRUCTURE(struct_db, emp_t, emp_fields);
 
     static field_info_t stud_fiels[] = {
         FIELD_INFO(student_t, stud_name, CHAR, 0),
@@ -50,10 +50,10 @@ main(int argc, char **argv){
         FIELD_INFO(student_t, aggregate, FLOAT, 0),
         FIELD_INFO(student_t, best_colleague, OBJ_PTR, student_t)
     };
-    REG_STRUCT(struct_db, student_t, stud_fiels);
+    REGISTER_STRUCTURE(struct_db, student_t, stud_fiels);
 
     /*Step 4 : Verify the correctness of structure database*/
-    print_structure_db(struct_db);
+    // print_structure_db(struct_db);
 
 
 
@@ -73,7 +73,7 @@ main(int argc, char **argv){
     
     emp_t *joseph = xcalloc(object_db, "emp_t", 2);
 
-    print_object_db(object_db);
+    // print_object_db(object_db);
 
     printf("\n");
     

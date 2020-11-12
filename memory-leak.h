@@ -82,7 +82,7 @@ add_structure_to_struct_db(struct_db_t *struct_db, struct_db_rec_t *struct_rec);
    {#fld_name, data_type, FIELD_SIZE(struct_name, fld_name),                \
         OFFSETOF(struct_name, fld_name), #nested_struct_name} 
 
-#define REG_STRUCT(struct_db, st_name, fields_arr)                    \
+#define REGISTER_STRUCTURE(struct_db, st_name, fields_arr)                    \
     do{                                                               \
         struct_db_rec_t *rec = calloc(1, sizeof(struct_db_rec_t));    \
         strncpy(rec->struct_name, #st_name, MAX_STRUCTURE_NAME_SIZE); \
