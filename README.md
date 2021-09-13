@@ -59,9 +59,47 @@ Start writing your code from test-app.c file and implement your code. Compile me
 </p>
 
 ## Limitations :
-  * Storing Pointers to Non-Pointer data types will is not handled.
+  #### Storing Pointers to Non-Pointer data types will is not handled.
+  ```C++
+  struct emp_t{
+    unsigned int des;
+  };
+  struct des_t{
+    char name[32];
+  };
+
+  struct emp_t *emp = xcalloc(...);
+  struct des_t *des = xcalloc(...);
+  emp->des = (unsigned int)*des;
+  des = NULL;
+  /*
+  Now MLD library will report it as a leak but memory is accessible through (struct des_t*)emp->des
+  and JAVA DO NOT ALLOW IT.
+  */
+  ```
   * Indirect Reference to objects is not valid.
-  * Does not allow Embedded Object Declaration.
+  ```C++
+  struct emp_t{
+    struct list_node *node;
+  };
+  struct des_t{
+    char name[32];
+    emp_t *hod;
+    struct list_node node;
+  };
+
+  struct emp_t *emp = xcalloc(...);
+  struct des_t *des = xcalloc(...);
+  emp->node = &des->node;
+  des = NULL;
+  /*
+  MLD library cannot parse fields of des_t object from emp_t object.
+
+  Now on traversing graph , HOD employee will not be visited and it will be reported as a leak.
+  But it isn't;
+  */
+  ```
+  * Does not allow Embedded Object Declaration so you cannot have a reference pointing to Embedded objects in Java.
   * This library cannot handle unions because unions don't have fixed size.
   * **This library is equivalent to Java Garbage Collector if we write programs in Java Style**
 
